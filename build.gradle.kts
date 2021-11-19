@@ -17,9 +17,15 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.springframework.boot:spring-boot-starter-aop")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("io.github.resilience4j:resilience4j-all:1.7.1")
+	implementation("io.github.resilience4j:resilience4j-spring-boot2:1.7.1")
+
+	testImplementation("com.github.tomakehurst:wiremock-jre8:2.31.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

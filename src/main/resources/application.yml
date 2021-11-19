@@ -1,0 +1,53 @@
+logging:
+  level:
+    io.github.bmalecki: DEBUG
+
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 100
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        slowCallDurationThreshold: 3s
+        waitDurationInOpenState: 500
+        permittedNumberOfCallsInHalfOpenState: 10
+    instances:
+      example-service:
+        baseConfig: default
+
+  retry:
+    configs:
+      default:
+        maxRetryAttempts: 4
+        waitDuration: 100
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 1.5
+        retryExceptions:
+          - org.springframework.web.client.HttpClientErrorException
+          - org.springframework.web.client.HttpServerErrorException
+          - org.springframework.web.client.ResourceAccessException
+          - java.util.concurrent.TimeoutException
+    instances:
+      example-service:
+        baseConfig: default
+
+  bulkhead:
+    instances:
+      example-service:
+        maxWaitDuration: 10ms
+        maxConcurrentCalls: 4
+
+  thread-pool-bulkhead:
+    instances:
+      example-service:
+        maxThreadPoolSize: 2
+        coreThreadPoolSize: 1
+        queueCapacity: 2
+
+  timelimiter:
+    instances:
+      example-service:
+        timeoutDuration: 200
+        cancelRunningFuture: false
